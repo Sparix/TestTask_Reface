@@ -1,0 +1,8 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+  <h1>Hello_user {{ user.username }}</h1>
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'task_manager:logout' %}">Logout</a>
+  <a href="{% url 'task_manager:table-user' %}">Table_user</a>
+{% endblock %}
