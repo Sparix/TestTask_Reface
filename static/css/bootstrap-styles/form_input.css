@@ -1,0 +1,8 @@
+input {
+    outline: none;
+    color: white;
+}
+
+input::placeholder {
+    color: white;
+}
