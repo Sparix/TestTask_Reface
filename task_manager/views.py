@@ -33,3 +33,7 @@ class TableUserListView(generic.ListView):
         queryset = Task.objects.prefetch_related("assignees").select_related("task_type").filter(
             assignees=self.request.user)
         return queryset
+
+
+class TableUserDetailView(generic.DetailView):
+    model = Task
