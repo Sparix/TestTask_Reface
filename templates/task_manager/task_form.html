@@ -1,0 +1,73 @@
+{% extends 'layouts/base-fullscreen.html' %}
+
+{% load static %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap-styles/forms.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles/form_input.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+
+        {% include "includes/navigation.html" %}
+
+      </div>
+    </div>
+  </div>
+  <div class="page-header align-items-start max-height-100 pt-5 pb-11 m-3 border-radius-lg"
+       style="background-image: url({% static 'img/curved-images/curved14.jpg' %});">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+          <h1 class="text-white mb-2 mt-5">Create New Task</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="create-task-form">
+    <div class="text-center">
+      <h3 class="font-weight-bolder text-info text-gradient">
+        Create Task
+      </h3>
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="d-flex w-100 justify-content-center">
+        <div class="flex-grow-1 p-2">
+          <label>Name</label>
+          <div class="mb-3">
+            {{ form.name }}
+          </div>
+          <label>Deadline</label>
+          <div class="mb-3">
+            {{ form.deadline }}
+          </div>
+          <label>Priority</label>
+          <div class="mb-3">
+            {{ form.priority }}
+          </div>
+          <label>Type task</label>
+          <div class="mb-3">
+            {{ form.task_type }}
+          </div>
+          <label>Assignees</label>
+          <div class="mb-3 check-box-assignees">
+            {{ form.assignees }}
+          </div>
+        </div>
+        <div class="flex-grow-1 p-2 d-flex flex-column">
+          <label>Description</label>
+          <div class="mb-3">
+            {{ form.description }}
+          </div>
+          <input type="submit" value="Create Task" class="btn bg-gradient-info w-70 mt-4 pos-button">
+        </div>
+      </div>
+    </form>
+  </div>
+  {% include 'includes/footer.html' %}
+
+
+{% endblock %}
