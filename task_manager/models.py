@@ -40,10 +40,13 @@ class Task(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     deadline = models.DateTimeField()
-    is_completed = models.BooleanField()
+    is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=6, choices=CHOICES_PRIORITY)
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
     assignees = models.ManyToManyField(Worker, related_name="tasks")
+
+    class Meta:
+        ordering = ("deadline", "priority", )
 
     def __str__(self):
         return (
@@ -51,3 +54,4 @@ class Task(models.Model):
             f"is complicated: {self.is_completed}, "
             f"Type task: {self.task_type}"
         )
+
