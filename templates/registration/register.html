@@ -6,7 +6,7 @@
 {% block stylesheets %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/bootstrap-styles/forms.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap-styles/form_input.css' %}">
+  <link rel="stylesheet" href="{% static 'css/styles/form_input.css' %}">
   <link rel="stylesheet" href="{% static 'css/styles/style.css' %}">
 {% endblock stylesheets %}
 
@@ -51,10 +51,10 @@
 
                 <div class="mt-2 position-relative text-center">
                   <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 px-3">
-                    {% if msg %}
-                      <span class="text-danger">{{ msg | safe }}</span>
+                    {% if form.errors %}
+                      <span class="text-danger">Invalid credentials</span>
                     {% else %}
-                      Add your credentials
+                      Create your credentials
                     {% endif %}
                   </p>
                 </div>

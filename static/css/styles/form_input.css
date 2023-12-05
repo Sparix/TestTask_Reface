@@ -6,3 +6,8 @@ input {
 input::placeholder {
     color: white;
 }
+
+textarea {
+    outline: none;
+    color: white;
+}
