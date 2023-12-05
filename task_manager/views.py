@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm
+from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm
 from task_manager.models import Worker, Task
 
 
@@ -31,7 +31,18 @@ class TableUserListView(LoginRequiredMixin, generic.ListView):
     model = Task
     context_object_name = "tables"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search = self.request.GET.get("search_field", "")
+        context["form_search"] = SearchForm(
+            initial={
+                "search_field": search
+            }
+        )
+        return context
+
     def get_queryset(self):
+        form = SearchForm(self.request.GET)
         queryset = (
             Task.objects.prefetch_related(
                 "assignees").select_related(
@@ -39,6 +50,9 @@ class TableUserListView(LoginRequiredMixin, generic.ListView):
                 assignees=self.request.user
             )
         )
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["search_field"])
+
         return queryset
 
 
