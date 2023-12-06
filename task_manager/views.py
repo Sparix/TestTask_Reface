@@ -30,6 +30,7 @@ class RegisterNewWorkerView(generic.CreateView):
 class TableUserListView(LoginRequiredMixin, generic.ListView):
     model = Task
     context_object_name = "tables"
+    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

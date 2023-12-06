@@ -1,0 +1,20 @@
+{% load query_transform %}
+{% if is_paginated %}
+  <div class="d-flex">
+    <!-- Previous Button -->
+    {% if page_obj.has_previous %}
+      <a href="?{% query_transform request page=page_obj.previous_page_number %}"
+         class="link-info btn bg-gradient-dark m-2">
+        Previous Page
+      </a>
+    {% endif %}
+
+    <!-- Next Button -->
+    {% if page_obj.has_next %}
+      <a href="?{% query_transform request page=page_obj.next_page_number %}"
+         class="link-info btn bg-gradient-reverse-dark m-2">
+        Next Page
+      </a>
+    {% endif %}
+  </div>
+{% endif %}
