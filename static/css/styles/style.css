@@ -92,7 +92,6 @@ input[type="checkbox"] {
 
 .search-input {
     background-color: #404B69 !important;
-    outline: none;
     border: none;
     border-radius: 20px;
     width: 30vw;
@@ -107,4 +106,40 @@ input[type="checkbox"] {
 
 a.button-task {
     margin-top: 7px;
+}
+
+.color-pagination {
+    color: #02c6f3;
+    background-color: #404B69;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+a.color-pagination:hover {
+    color: white;
+}
+
+.bg-gradient-reverse-dark {
+    background-image: linear-gradient(60deg, #141727 0%, #3A416F 100%);
+}
+
+.task-detail-table {
+    background-color: #3e506f;
+    width: 95vw;
+    margin: auto;
+    border-radius: 30px;
+    padding: 10px;
+    border: #02c6f3 solid 1px;
+}
+
+.description-task {
+    min-width: 40%;
+}
+
+.link-worker {
+    padding: 8px;
+}
+
+#text-color-index {
+    color: #535C69 !important;
 }
