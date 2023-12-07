@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layouts/base-fullscreen.html' %}
+{% block content %}
+  {% load static %}
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
 
-</body>
-</html>
+        {% include "includes/navigation.html" %}
+
+      </div>
+    </div>
+  </div>
+  <div class="page-header align-items-start max-height-100 pt-5 pb-11 m-3 border-radius-lg"
+       style="background-image: url({% static 'img/curved-images/curved7.jpg' %});">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 text-center mx-auto">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task-detail-table">
+    <div class="m-2">
+      <h3 class="font-weight-bolder text-info text-gradient">
+        Task Detail
+      </h3>
+    </div>
+    <div class="d-flex w-100 justify-content-center">
+      <div class="flex-grow-1 p-2 description-task">
+        <label class="text-uppercase">Task Name</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          {{ task.name }}
+        </div>
+        <label class="text-uppercase">Deadline</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          {{ task.deadline }}
+        </div>
+        <label class="text-uppercase">Priority</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          {{ task.priority }}
+        </div>
+        <label class="text-uppercase">Type task</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          {{ task.task_type }}
+        </div>
+        <label class="text-uppercase">Assignees</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          <div>
+            {% for worker in task.assignees.all %}
+              <p>
+                <a href="" class="link-warning link-worker">
+                  {{ worker }}
+                </a>
+              </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="flex-grow-1 p-2 d-flex flex-column">
+        <label class="text-uppercase">Description</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
+          {{ task.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'includes/footer.html' %}
+
+{% endblock %}
