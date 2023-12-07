@@ -9,8 +9,13 @@ from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm
 from task_manager.models import Worker, Task
 
 
-@login_required
 def index(request):
+    if request.user.is_authenticated:
+        context = {
+            "solved_tasks": Task.objects.filter(is_completed=True, assignees=request.user).count(),
+            "unsolved_tasks": Task.objects.filter(is_completed=False, assignees=request.user).count()
+        }
+        return render(request, "task_manager/index.html", context=context)
     return render(request, "task_manager/index.html")
 
 

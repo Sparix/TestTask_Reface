@@ -20,6 +20,7 @@ class CreateNewTaskForm(forms.ModelForm):
             "id": "cb1",
             "class": "assignees-checkbox",
         }),
+        required=False
     )
 
     class Meta:
