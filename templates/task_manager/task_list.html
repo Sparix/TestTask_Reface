@@ -60,8 +60,8 @@
                     </th>
                   </tr>
                   </thead>
+                  <tbody>
                   {% for table in tables %}
-                    <tbody>
                     <tr>
                       <td class="max-width-200">
                         <div class="d-flex px-2 py-1">
@@ -108,8 +108,9 @@
                           More</a>
                       </td>
                     </tr>
-                    </tbody>
+
                   {% endfor %}
+                  </tbody>
                 </table>
               {% else %}
                 <div class="card-header pb-0">
