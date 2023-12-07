@@ -53,39 +53,52 @@
     </div>
   </header>
   {% if user.is_authenticated %}
-  <section class="pt-3 pb-4" id="count-stats">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
-          <div class="row">
-            <div class="col-md-4 position-relative">
-              <div class="p-3 text-center text-color-index">
-                <h1 class="text-gradient text-primary"><span>{{ user.tasks.count }}</span></h1>
-                <h5 class="mt-3" id="text-color-index">All tasks</h5>
-                <p class="text-sm text-black-50">This is a count of all your tasks</p>
+    <section class="pt-3 pb-4" id="count-stats">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
+            <div class="row">
+              <div class="col-md-4 position-relative">
+                <div class="p-3 text-center text-color-index">
+                  <h1 class="text-gradient text-primary"><span>{{ user.tasks.count }}</span></h1>
+                  <h5 class="mt-3" id="text-color-index">All tasks</h5>
+                  <p class="text-sm text-black-50">This is a count of all your tasks</p>
+                </div>
+                <hr class="vertical dark">
               </div>
-              <hr class="vertical dark">
-            </div>
-            <div class="col-md-4 position-relative">
-              <div class="p-3 text-center">
-                <h1 class="text-gradient text-primary"><span>{{ unsolved_tasks }}</span></h1>
-                <h5 class="mt-3" id="text-color-index">Unsolved tasks</h5>
-                <p class="text-sm text-black-50">Count of tasks that have not been completed</p>
+              <div class="col-md-4 position-relative">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-primary"><span>{{ unsolved_tasks }}</span></h1>
+                  <h5 class="mt-3" id="text-color-index">Unsolved tasks</h5>
+                  <p class="text-sm text-black-50">Count of tasks that have not been completed</p>
+                </div>
+                <hr class="vertical dark">
               </div>
-              <hr class="vertical dark">
-            </div>
-            <div class="col-md-4">
-              <div class="p-3 text-center">
-                <h1 class="text-gradient text-primary">{{ solved_tasks }}</h1>
-                <h5 class="mt-3" id="text-color-index">Solved tasks</h5>
-                <p class="text-sm text-black-50">Count of tasks already completed</p>
+              <div class="col-md-4">
+                <div class="p-3 text-center">
+                  <h1 class="text-gradient text-primary">{{ solved_tasks }}</h1>
+                  <h5 class="mt-3" id="text-color-index">Solved tasks</h5>
+                  <p class="text-sm text-black-50">Count of tasks already completed</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {% else %}
+    <section class="pt-3 pb-4" id="count-stats">
+      <div class="container">
+        <div class="row">
+          <div class="w-30 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
+            <h2 class="text-gradient text-primary text-center"><span>To continue, you need to sign in</span></h2>
+            <div class="text-center">
+              <a class="btn btn-primary" href="{% url 'login' %}">SIGN IN</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   {% endif %}
 
   {% include 'includes/footer.html' %}

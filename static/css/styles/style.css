@@ -125,7 +125,7 @@ a.color-pagination:hover {
 
 .task-detail-table {
     background-color: #3e506f;
-    width: 95vw;
+    width: 70vw;
     margin: auto;
     border-radius: 30px;
     padding: 10px;
@@ -142,4 +142,19 @@ a.color-pagination:hover {
 
 #text-color-index {
     color: #535C69 !important;
+}
+.content-row {
+    width: 100px;
+    height: 100px;
+}
+
+.update-button {
+    margin-top: 20px ;
+    right: 50px;
+}
+
+.button-update {
+    font-size: 34px !important;
+    background-color: #3ea1ec !important;
+    color: white !important;
 }

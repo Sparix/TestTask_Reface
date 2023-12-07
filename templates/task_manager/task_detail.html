@@ -19,12 +19,29 @@
       </div>
     </div>
   </div>
+  <div class="position-absolute update-button">
+<a class="btn text-bold button-update " href="{% url 'task_manager:update-task' task.id %}">UPDATE</a>
+  </div>
 
   <div class="task-detail-table">
-    <div class="m-2">
+    <div class="m-2 d-flex justify-content-between">
       <h3 class="font-weight-bolder text-info text-gradient">
         Task Detail
       </h3>
+      <div>
+        <label class="text-uppercase">Task Completed:</label>
+        <h3><a href="{% url 'task_manager:change-status' task.pk %}"><span class="
+                                                badge
+                                                badge-sm
+                                            {% if task.is_completed %}
+                                                bg-gradient-success
+                                            {% else %}
+                                                bg-gradient-danger
+                                            {% endif %}"
+        >
+                                                {{ task.is_completed }}
+                                            </span></a></h3>
+      </div>
     </div>
     <div class="d-flex w-100 justify-content-center">
       <div class="flex-grow-1 p-2 description-task">
