@@ -70,3 +70,19 @@ class CreateNewTaskView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = CreateNewTaskForm
     success_url = reverse_lazy("task_manager:table-user")
+
+
+def change_status_tasks(request, pk):
+    task = Task.objects.get(id=pk)
+    if task.is_completed:
+        task.is_completed = False
+    else:
+        task.is_completed = True
+    task.save()
+    return redirect("task_manager:detail-task", pk=pk)
+
+
+class UpdateTaskView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = CreateNewTaskForm
+    success_url = reverse_lazy("task_manager:table-user")
