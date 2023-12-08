@@ -10,7 +10,13 @@ from task_manager.models import Worker, Task
 class RegisterWorkerForm(UserCreationForm):
     class Meta:
         model = Worker
-        fields = ("username", "email", "password1", "password2",)
+        fields = ("username", "position", "email", "password1", "password2",)
+        widgets = {
+            "position": forms.Select(
+                attrs={
+                    "class": "choice-select"
+                })
+        }
 
 
 class CreateNewTaskForm(forms.ModelForm):
