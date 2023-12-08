@@ -2,10 +2,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm
+from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm, UserUpdateForm
 from task_manager.models import Worker, Task
 
 
@@ -86,3 +86,12 @@ class UpdateTaskView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = CreateNewTaskForm
     success_url = reverse_lazy("task_manager:table-user")
+
+
+class UserProfileView(LoginRequiredMixin, generic.UpdateView):
+    model = Worker
+    template_name = "task_manager/user_profile.html"
+    form_class = UserUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy("task_manager:user-profile", kwargs={"pk": self.request.user.pk})
