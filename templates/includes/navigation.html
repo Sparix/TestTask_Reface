@@ -29,7 +29,7 @@
           {% if user.is_authenticated %}
             <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link"
                href="{% url 'task_manager:table-user' %}">My Tasks</a>
-            <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link" href="#">My Profile</a>
+            <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link" href="{% url 'task_manager:user-profile' user.pk %}">My Profile</a>
           {% endif %}
         </li>
 
