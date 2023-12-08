@@ -61,3 +61,31 @@ class SearchForm(forms.Form):
             "placeholder": "Search field, type name table"
         })
     )
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Worker
+        fields = ("username", "first_name", "last_name", "email", "position", )
+        widgets = {
+            "username": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter username"
+            }),
+            "first_name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter first name"
+            }),
+            "last_name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter last name"
+            }),
+            "email": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter email"
+            }),
+            "position": forms.Select(attrs={
+                "class": "form-control",
+            }),
+
+        }
