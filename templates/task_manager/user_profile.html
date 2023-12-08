@@ -1,0 +1,147 @@
+{% extends 'layouts/base-fullscreen.html' %}
+
+{% block stylesheets %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles/profile-user.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="nav-profile">
+    <a class="font-weight-bolder ms-3 text-white" href="/">
+      TaskManager
+    </a>
+    <ul class="d-flex list-unstyled mx-auto ms-xl-auto">
+      <li class="nav-item">
+        <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link"
+           href="{% url 'task_manager:table-user' %}">My Tasks</a>
+      </li>
+      <li class="nav-item">
+        <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link"
+           href="{% url 'task_manager:user-profile' user.pk %}">My Profile</a></li>
+    </ul>
+    <ul class="navbar-nav d-lg-block d-none">
+      <li class="nav-item">
+        <a class="navbar-brand font-weight-normal ms-lg-0 ms-3 hover-link"
+           href="{% url 'task_manager:logout' %}">Logout</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav d-lg-block d-none">
+      <li class="nav-item">
+        <a target="_blank"
+           href="https://github.com/Sparix/TaskManager"
+           class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Project on GitHub</a>
+      </li>
+    </ul>
+  </div>
+  <div class="mt-8">
+    <div class="container">
+      <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="account-settings">
+                <div class="user-profile">
+                  <h5 class="user-name color-profile-name">{% if worker.first_name and worker.last_name %}Full Name:
+                    {{ worker.first_name }} {{ worker.last_name }}{% else %}Username:
+                    {{ worker.username }} {% endif %}</h5>
+                  <h6 class="user-email color-profile-name">{% if worker.email %}Email:
+                    {{ worker.email }}{% endif %}</h6>
+                </div>
+                <div class="about">
+                  <h5 class="mb-2 text-primary">About</h5>
+                  <p>I'm {% if worker.first_name and worker.last_name %}{{ worker.first_name }}
+                    {{ worker.last_name }}{% else %}{{ worker.username }}{% endif %} .Position: {% if worker.position %} {{ worker.position }} {% else %}Developer{% endif %} I enjoy creating user-centric,
+                    delightful and human experiences.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+          <div class="card h-100">
+            <form action="{% url 'task_manager:user-profile' worker.pk %}" method="post">
+              {% csrf_token %}
+              <div class="card-body">
+                <div class="row gutters">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mb-3 text-primary">Personal Details</h6>
+                  </div>
+                  {% if worker.id == user.id %}
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="fullName">First Name</label>
+                        {{ form.first_name }}
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="eMail">Email</label>
+                        {{ form.email }}
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="phone">Last Name</label>
+                        {{ form.last_name }}
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="website">Position</label>
+                        {{ form.position }}
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name">Username</label>
+                        {{ form.username }}
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row gutters">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                          <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="fullName">First Name:</label>
+                        <p>{% if worker.first_name %}{{ worker.first_name }}{% else %}None{% endif %}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="eMail">Email:</label>
+                        <p>{% if worker.email %}{{ worker.email }}{% else %}None{% endif %}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="phone">Last Name:</label>
+                        <p>{% if worker.last_name %}{{ worker.last_name }}{% else %}None{% endif %}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name" for="website">Position:</label>
+                        <p>{% if worker.position %}{{ worker.position }}{% else %}None{% endif %}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label class="color-profile-name">Username</label>
+                        <p>{% if worker.username %}{{ worker.username }}{% else %}-----{% endif %}</p>
+                      </div>
+                    </div>
+                  {% endif %}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "includes/footer.html" %}
+{% endblock %}

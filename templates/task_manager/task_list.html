@@ -1,7 +1,7 @@
 {% extends 'layouts/base-fullscreen.html' %}
 
 {% block content %}
-  <div class="container position-sticky z-index-sticky top-1">
+  <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
 
@@ -11,10 +11,19 @@
     </div>
   </div>
   <div class="back-nav"></div>
-  <div class="create-task">
-    <a class="btn btn-sm btn-round bg-gradient-dark task-button mb-0 me-1" href="{% url 'task_manager:create-task' %}">
-      Create task
-    </a>
+  <div class="d-flex mt-3 mb-5 justify-content-between">
+    <form action="" method="get" class="search">
+      <div>
+        {{ form_search.search_field }}
+        <input class="btn btn-success bg-gradient-success mb-0" type="submit" value="Search">
+      </div>
+    </form>
+    <div class="create-task">
+      <a class="btn btn-success btn-round bg-gradient-danger button-task"
+         href="{% url 'task_manager:create-task' %}">
+        Create New task
+      </a>
+    </div>
   </div>
   <section class="section-width">
     <div class="row">
@@ -29,38 +38,40 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                   <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    <th class="text-uppercase text-info text-sm font-weight-bolder">
                       Task name
                     </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                    <th class="text-uppercase text-info text-sm font-weight-bolderps-2">
                       Description
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
                       Deadline
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
                       is_completed
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
                       priority
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
                       task_type
+                    </th>
+                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
                     </th>
                   </tr>
                   </thead>
+                  <tbody>
                   {% for table in tables %}
-                    <tbody>
                     <tr>
-                      <td>
+                      <td class="max-width-200">
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{ table.name|slice:":40" }}</h6>
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <p class="text-xs text-secondary mb-0">
+                      <td class="max-width-200">
+                        <p class="text-sm text-secondary mb-0">
                           {{ table.description|slice:":40" }}
                         </p>
                       </td>
@@ -83,27 +94,36 @@
                                             </span>
                       </td>
                       <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">
-                                                {{ table.priority }}
-                                            </span>
+                        <span class="text-secondary text-xs font-weight-bold">
+                            {{ table.priority }}
+                        </span>
                       </td>
                       <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">
-                                                {{ table.task_type }}
-                                            </span>
+                        <span class="text-secondary text-xs font-weight-bold">
+                            {{ table.task_type }}
+                        </span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <a class="link-info btn bg-gradient-dark" href="{% url 'task_manager:detail-task' table.pk %}">Show
+                          More</a>
                       </td>
                     </tr>
-                    </tbody>
+
                   {% endfor %}
+                  </tbody>
                 </table>
               {% else %}
                 <div class="card-header pb-0">
-                  <h6>You don't have any tasks</h6>
+                  <h6>No tasks found</h6>
                 </div>
               {% endif %}
             </div>
           </div>
         </div>
+        <div class="d-flex justify-content-center">
+          {% include 'includes/paginate.html' %}
+        </div>
+
       </div>
     </div>
   </section>

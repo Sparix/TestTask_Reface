@@ -21,7 +21,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-5 text-center mx-auto">
-          <h1 class="text-white mb-2 mt-5">Create New Task</h1>
+          <h1 class="text-white mb-2 mt-5">{{ object|yesno:"Update,Create New" }} Task</h1>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
   <div class="create-task-form">
     <div class="text-center">
       <h3 class="font-weight-bolder text-info text-gradient">
-        Create Task
+        {{ object|yesno:"Update,Create" }} Task
       </h3>
     </div>
     <form action="" method="post">
@@ -37,32 +37,38 @@
       <div class="d-flex w-100 justify-content-center">
         <div class="flex-grow-1 p-2">
           <label>Name</label>
+          {{ form.name.errors }}
           <div class="mb-3">
             {{ form.name }}
           </div>
           <label>Deadline</label>
+          {{ form.deadline.errors }}
           <div class="mb-3">
             {{ form.deadline }}
           </div>
           <label>Priority</label>
+          {{ form.priority.errors }}
           <div class="mb-3">
             {{ form.priority }}
           </div>
           <label>Type task</label>
+          {{ form.task_type.errors }}
           <div class="mb-3">
             {{ form.task_type }}
           </div>
           <label>Assignees</label>
+          {{ form.assignees.errors }}
           <div class="mb-3 check-box-assignees">
             {{ form.assignees }}
           </div>
         </div>
         <div class="flex-grow-1 p-2 d-flex flex-column">
           <label>Description</label>
+          {{ form.description.errors }}
           <div class="mb-3">
             {{ form.description }}
           </div>
-          <input type="submit" value="Create Task" class="btn bg-gradient-info w-70 mt-4 pos-button">
+          <input type="submit" value="{{ object|yesno:"Update,Create" }} Task" class="btn bg-gradient-info w-70 mt-4 pos-button">
         </div>
       </div>
     </form>

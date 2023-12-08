@@ -5,12 +5,17 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm
+from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm, UserUpdateForm
 from task_manager.models import Worker, Task
 
 
-@login_required
 def index(request):
+    if request.user.is_authenticated:
+        context = {
+            "solved_tasks": Task.objects.filter(is_completed=True, assignees=request.user).count(),
+            "unsolved_tasks": Task.objects.filter(is_completed=False, assignees=request.user).count()
+        }
+        return render(request, "task_manager/index.html", context=context)
     return render(request, "task_manager/index.html")
 
 
@@ -24,14 +29,26 @@ class RegisterNewWorkerView(generic.CreateView):
     model = Worker
     form_class = RegisterWorkerForm
     template_name = "registration/register.html"
-    success_url = reverse_lazy("task_manager:index")
+    success_url = reverse_lazy("login")
 
 
 class TableUserListView(LoginRequiredMixin, generic.ListView):
     model = Task
     context_object_name = "tables"
+    paginate_by = 6
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search = self.request.GET.get("search_field", "")
+        context["form_search"] = SearchForm(
+            initial={
+                "search_field": search
+            }
+        )
+        return context
 
     def get_queryset(self):
+        form = SearchForm(self.request.GET)
         queryset = (
             Task.objects.prefetch_related(
                 "assignees").select_related(
@@ -39,6 +56,9 @@ class TableUserListView(LoginRequiredMixin, generic.ListView):
                 assignees=self.request.user
             )
         )
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["search_field"])
+
         return queryset
 
 
@@ -50,3 +70,28 @@ class CreateNewTaskView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = CreateNewTaskForm
     success_url = reverse_lazy("task_manager:table-user")
+
+
+def change_status_tasks(request, pk):
+    task = Task.objects.get(id=pk)
+    if task.is_completed:
+        task.is_completed = False
+    else:
+        task.is_completed = True
+    task.save()
+    return redirect("task_manager:detail-task", pk=pk)
+
+
+class UpdateTaskView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = CreateNewTaskForm
+    success_url = reverse_lazy("task_manager:table-user")
+
+
+class UserProfileView(LoginRequiredMixin, generic.UpdateView):
+    model = Worker
+    template_name = "task_manager/user_profile.html"
+    form_class = UserUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy("task_manager:user-profile", kwargs={"pk": self.request.user.pk})
