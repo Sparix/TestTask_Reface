@@ -1,13 +1,7 @@
 input {
     outline: none;
-    color: white;
-}
-
-input::placeholder {
-    color: white;
 }
 
 textarea {
     outline: none;
-    color: white;
 }
