@@ -158,3 +158,47 @@ a.color-pagination:hover {
     background-color: #3ea1ec !important;
     color: white !important;
 }
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #2c3c58;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+
+}
+
+.popup h2 {
+    margin-top: 0;
+}
+
+.popup .close {
+    position: absolute;
+    top: -10px;
+    right: 5px;
+    font-size: 30px;
+    text-decoration: none;
+    color: red;
+}
+
+.popup .close:hover {
+    color: darkred;
+}
+
+.type-task-header {
+    color: #02c6f3;
+}
+
+.create_task_type {
+    justify-content: right;
+    color: #02c6f3;
+    padding: 5px;
+}
+.create_task_type:hover {
+    color: #17AD37;
+}

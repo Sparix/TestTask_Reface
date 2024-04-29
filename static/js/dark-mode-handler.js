@@ -22,15 +22,13 @@ function setPage(theme) {
     page.classList.add(pageClass[theme]);
 }
 
-// За замовчуванням встановлюємо тему "dark"
 setTheme(1);
 setIndicator(1);
 setPage(1);
-themeSwitch.checked = true; // Позначаємо перемикач як ввімкнений
+themeSwitch.checked = true;
 
-// Обробник події для зміни теми при взаємодії з перемикачем
 themeSwitch.addEventListener('change', function () {
-    const themeIndex = this.checked ? 1 : 0; // Визначаємо індекс теми на основі положення перемикача
+    const themeIndex = this.checked ? 1 : 0;
     setTheme(themeIndex);
     setIndicator(themeIndex);
     setPage(themeIndex);

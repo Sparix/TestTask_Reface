@@ -57,9 +57,13 @@
         <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
           {{ task.priority }}
         </div>
-        <label class="text-uppercase">Type task</label>
+        <label class="text-uppercase">Type task name</label>
         <div class="m-3 color-text bg-dark p-3 border-radius-2xl">
-          {{ task.task_type }}
+          {{ task.task_type.name }}
+        </div>
+        <label class="text-uppercase">Color</label>
+        <div class="m-3 color-text bg-dark p-3 border-radius-2xl" style="color: {{ task.task_type.color }}">
+          {{ task.task_type.color }}
         </div>
         <label class="text-uppercase">Assignees</label>
         <div class="m-3 color-text bg-dark p-3 border-radius-2xl">

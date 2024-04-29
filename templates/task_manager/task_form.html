@@ -32,48 +32,81 @@
         {{ object|yesno:"Update,Create" }} Task
       </h3>
     </div>
-    <form action="" method="post">
-      {% csrf_token %}
-      <div class="d-flex w-100 justify-content-center">
-        <div class="flex-grow-1 p-2">
-          <label>Name</label>
-          {{ form.name.errors }}
-          <div class="mb-3">
-            {{ form.name }}
+    <fieldset>
+      <form action="{% url 'task_manager:create-task' %}" method="post">
+        {% csrf_token %}
+        <div class="d-flex w-100 justify-content-center">
+          <div class="flex-grow-1 p-2">
+            <label>Name</label>
+            {{ form.name.errors }}
+            <div class="mb-3">
+              {{ form.name }}
+            </div>
+            <label>Deadline</label>
+            {{ form.deadline.errors }}
+            <div class="mb-3">
+              {{ form.deadline }}
+            </div>
+            <label>Priority</label>
+            {{ form.priority.errors }}
+            <div class="mb-3">
+              {{ form.priority }}
+            </div>
+            <div class="d-flex">
+              <label>Type task</label>
+              <div class="flex-grow-1"></div>
+              <a id="open-popup" href="#open-popup" class="create_task_type">create type task</a>
+            </div>
+            {{ task_type_form.color.errors }}
+            {{ task_type_form.name.errors }}
+            <div class="mb-3">
+              {{ form.task_type }}
+            </div>
+            <label>Assignees</label>
+            {{ form.assignees.errors }}
+            <div class="mb-3 check-box-assignees">
+              {{ form.assignees }}
+            </div>
           </div>
-          <label>Deadline</label>
-          {{ form.deadline.errors }}
-          <div class="mb-3">
-            {{ form.deadline }}
-          </div>
-          <label>Priority</label>
-          {{ form.priority.errors }}
-          <div class="mb-3">
-            {{ form.priority }}
-          </div>
-          <label>Type task</label>
-          {{ form.task_type.errors }}
-          <div class="mb-3">
-            {{ form.task_type }}
-          </div>
-          <label>Assignees</label>
-          {{ form.assignees.errors }}
-          <div class="mb-3 check-box-assignees">
-            {{ form.assignees }}
+          <div class="flex-grow-1 p-2 d-flex flex-column">
+            <label>Description</label>
+            {{ form.description.errors }}
+            <div class="mb-3">
+              {{ form.description }}
+            </div>
+            <button name="form_task" type="submit" class="btn bg-gradient-info w-70 mt-4 pos-button">
+              {{ object|yesno:"Update,Create" }} Task
+            </button>
           </div>
         </div>
-        <div class="flex-grow-1 p-2 d-flex flex-column">
-          <label>Description</label>
-          {{ form.description.errors }}
-          <div class="mb-3">
-            {{ form.description }}
-          </div>
-          <input type="submit" value="{{ object|yesno:"Update,Create" }} Task" class="btn bg-gradient-info w-70 mt-4 pos-button">
-        </div>
-      </div>
-    </form>
+      </form>
+    </fieldset>
+  </div>
+  <div id="popup" class="popup">
+    <h2 class="type-task-header">Create Type Task</h2>
+    <hr>
+    <a class="close" href="#">×</a>
+    <div class="content">
+      <fieldset>
+        <form method="post" action="{% url 'task_manager:create-task' %}">
+          {% csrf_token %}
+          {{ task_type_form.as_p }}
+          <button name="type_task_form" type="submit" class="btn bg-gradient-info w-70 mt-4 pos-button">Submit</button>
+        </form>
+      </fieldset>
+    </div>
   </div>
   {% include 'includes/footer.html' %}
+  <script>
+      document.getElementById('open-popup').addEventListener('click', function (event) {
+          event.preventDefault();
+          var popup = document.getElementById('popup');
+          popup.style.display = 'block';
+      });
 
-
+      document.querySelector('.popup .close').addEventListener('click', function () {
+          var popup = document.getElementById('popup');
+          popup.style.display = 'none';
+      });
+  </script>
 {% endblock %}
