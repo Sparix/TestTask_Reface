@@ -3,9 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
-from task_manager.forms import RegisterWorkerForm, CreateNewTaskForm, SearchForm, UserUpdateForm
+from task_manager.forms import (
+    RegisterWorkerForm,
+    CreateNewTaskForm,
+    SearchForm,
+    UserUpdateForm,
+    TaskTypeCreate
+)
 from task_manager.models import Worker, Task
 
 
@@ -66,18 +72,36 @@ class TableUserDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
 
 
-class CreateNewTaskView(LoginRequiredMixin, generic.CreateView):
-    model = Task
-    form_class = CreateNewTaskForm
-    success_url = reverse_lazy("task_manager:table-user")
+class CreateNewTaskView(generic.TemplateView):
+    template_name = "task_manager/task_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["task_type_form"] = TaskTypeCreate()
+        context["form"] = CreateNewTaskForm()
+        return context
+
+    def post(self, request):
+        form_task_type = TaskTypeCreate()
+        form_task = CreateNewTaskForm()
+        if request.method == "POST":
+            if "type_task_form" in request.POST:
+                form_task_type = TaskTypeCreate(request.POST)
+                if form_task_type.is_valid():
+                    form_task_type.save()
+            elif "form_task" in request.POST:
+                form_task = CreateNewTaskForm(request.POST)
+                if form_task.is_valid():
+                    form_task.save()
+                    return redirect("task_manager:table-user")
+
+        return render(request, "task_manager/task_form.html",
+                      context={'form': form_task, 'task_type_form': form_task_type})
 
 
 def change_status_tasks(request, pk):
     task = Task.objects.get(id=pk)
-    if task.is_completed:
-        task.is_completed = False
-    else:
-        task.is_completed = True
+    task.is_completed = not task.is_completed
     task.save()
     return redirect("task_manager:detail-task", pk=pk)
 
