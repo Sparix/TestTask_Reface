@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
-from task_manager.models import Worker, Task
+from task_manager.models import TaskType, Worker, Task
 
 
 class RegisterWorkerForm(UserCreationForm):
@@ -16,6 +16,20 @@ class RegisterWorkerForm(UserCreationForm):
                 attrs={
                     "class": "choice-select"
                 })
+        }
+
+
+class TaskTypeCreate(forms.ModelForm):
+    class Meta:
+        model = TaskType
+        fields = ("name", "color")
+
+        widgets = {
+            "color": forms.TextInput(
+                attrs={
+                    "type": "color"
+                }
+            )
         }
 
 
@@ -72,7 +86,7 @@ class SearchForm(forms.Form):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = Worker
-        fields = ("username", "first_name", "last_name", "email", "position", )
+        fields = ("username", "first_name", "last_name", "email", "position",)
         widgets = {
             "username": forms.TextInput(attrs={
                 "class": "form-control",
