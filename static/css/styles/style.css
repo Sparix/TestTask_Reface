@@ -202,3 +202,12 @@ a.color-pagination:hover {
 .create_task_type:hover {
     color: #17AD37;
 }
+
+.sorted_field {
+    outline: none;
+    border: none;
+    color: #02c6f3;
+    font-weight: bold;
+    background: none;
+    padding: 10px;
+}

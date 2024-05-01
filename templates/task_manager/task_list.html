@@ -36,30 +36,81 @@
             <div class="table-responsive p-0">
               {% if tables %}
                 <table class="table align-items-center mb-0">
-                  <thead>
-                  <tr>
-                    <th class="text-uppercase text-info text-sm font-weight-bolder">
-                      Task name
-                    </th>
-                    <th class="text-uppercase text-info text-sm font-weight-bolderps-2">
-                      Description
-                    </th>
-                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
-                      Deadline
-                    </th>
-                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
-                      is_completed
-                    </th>
-                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
-                      priority
-                    </th>
-                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
-                      task_type
-                    </th>
-                    <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
-                    </th>
-                  </tr>
-                  </thead>
+                  <form action="" method="get">
+                    <thead>
+                    <tr>
+                      <th class="text-uppercase text-info text-sm font-weight-bolder">
+                        {% if request.GET.sort_field == "-name" %}
+                          <button type="submit" name="sort_field" value="name" class="sorted_field">
+                            Task name
+                          </button>
+                        {% else %}
+                          <button type="submit" name="sort_field" value="-name" class="sorted_field">
+                            Task name
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-uppercase text-info text-sm font-weight-bolderps-2">
+                        {% if request.GET.by_characters == "-description_length" %}
+                          <button type="submit" name="by_characters" value="description_length" class="sorted_field">
+                            Description
+                          </button>
+                        {% else %}
+                          <button type="submit" name="by_characters" value="-description_length" class="sorted_field">
+                            Description
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
+                        {% if request.GET.sort_field == "-deadline" %}
+                          <button type="submit" name="sort_field" value="deadline" class="sorted_field">
+                            Deadline
+                          </button>
+                        {% else %}
+                          <button type="submit" name="sort_field" value="-deadline" class="sorted_field">
+                            Deadline
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
+                        {% if request.GET.sort_field == "-is_completed" %}
+                          <button type="submit" name="sort_field" value="is_completed" class="sorted_field">
+                            is_completed
+                          </button>
+                        {% else %}
+                          <button type="submit" name="sort_field" value="-is_completed" class="sorted_field">
+                            is_completed
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
+                        {% if request.GET.sort_field == "-priority" %}
+                          <button type="submit" name="sort_field" value="priority" class="sorted_field">
+                            priority
+                          </button>
+                        {% else %}
+                          <button type="submit" name="sort_field" value="-priority" class="sorted_field">
+                            priority
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
+                        {% if request.GET.sort_field == "-task_type" %}
+                          <button type="submit" name="sort_field" value="task_type" class="sorted_field">
+                            task_type
+                          </button>
+                        {% else %}
+                          <button type="submit" name="sort_field" value="-task_type" class="sorted_field">
+                            task_type
+                          </button>
+                        {% endif %}
+                      </th>
+                      <th class="text-center text-uppercase text-info text-sm font-weight-bolder">
+
+                      </th>
+                    </tr>
+                    </thead>
+                  </form>
                   <tbody>
                   {% for table in tables %}
                     <tr style="background-color: {{ table.task_type.color }}">
@@ -104,7 +155,8 @@
                         </span>
                       </td>
                       <td class="align-middle text-center">
-                        <a class="link-info btn bg-gradient-dark" href="{% url 'task_manager:detail-task' table.pk %}">Show
+                        <a class="link-info btn bg-gradient-dark"
+                           href="{% url 'task_manager:detail-task' table.pk %}">Show
                           More</a>
                       </td>
                     </tr>

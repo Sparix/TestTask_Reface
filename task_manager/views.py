@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
+from django.db.models.functions import Length
 
 from task_manager.forms import (
     RegisterWorkerForm,
@@ -63,7 +64,15 @@ class TableUserListView(LoginRequiredMixin, generic.ListView):
             )
         )
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["search_field"])
+            queryset = queryset.filter(name__icontains=form.cleaned_data["search_field"])
+
+        order_data = self.request.GET.get("sort_field")
+        sort_by_characters = self.request.GET.get("by_characters")
+        if order_data:
+            queryset = queryset.order_by(order_data)
+
+        if sort_by_characters:
+            queryset = queryset.annotate(description_length=Length("description")).order_by(sort_by_characters)
 
         return queryset
 
